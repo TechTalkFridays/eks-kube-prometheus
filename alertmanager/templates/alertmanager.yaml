@@ -1,0 +1,31 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  labels:
+    alertmanager: main
+  name: main
+  namespace: {{ .Release.Namespace }}
+spec:
+  baseImage: {{ .Values.baseImage }}
+  nodeSelector:
+    kubernetes.io/os: linux
+  replicas: {{ .Values.replicas }}
+  externalUrl: "https://{{ .Values.externalUrl }}"
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: alertmanager-main
+  priorityClassName: shared-services
+  version: "{{ .Values.version }}"
+{{- if hasKey .Values "resources" }}
+  resources:
+{{ toYaml .Values.resources | indent 12 }}
+{{- end }}
+  storage:
+    volumeClaimTemplate:
+      spec:
+        resources:
+          requests:
+            storage: 10Gi

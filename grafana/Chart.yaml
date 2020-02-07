@@ -1,0 +1,14 @@
+apiVersion: v1
+name: grafana
+version: 0.0.1
+appVersion: 6.4.3
+description: Helm chart for grafana
+keywords:
+  - kube-prometheus
+  - grafana
+sources:
+  - git@github.com:TechTalkFridays/eks-kube-prometheus.git
+engine: gotpl
+maintainers:
+- name: Joel Damata
+  email: joel.damata94@gmail.com

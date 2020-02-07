@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: morty-monitoring-namespace
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: {{ .Values.server }}
+  project: kube-prometheus
+  source:
+    path: namespace
+    repoURL: git@github.com:TechTalkFridays/eks-kube-prometheus.git
+    targetRevision: master

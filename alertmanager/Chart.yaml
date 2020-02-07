@@ -1,0 +1,14 @@
+apiVersion: v1
+name: alertmanager
+version: 0.0.1
+appVersion:
+description: Helm chart for alertmanager
+keywords:
+  - kube-prometheys
+  - alertmanager
+sources:
+  - git@github.com:TechTalkFridays/eks-kube-prometheus.git
+engine: gotpl
+maintainers:
+- name: Joel Damata
+  email: joel.damata94@gmail.com

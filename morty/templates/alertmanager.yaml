@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: morty-alertmanager
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: {{ .Values.server }}
+  project: kube-prometheus
+  source:
+    path: alertmanager
+    repoURL: git@github.com:TechTalkFridays/eks-kube-prometheus.git
+    targetRevision: master
+    helm:
+      valueFiles:
+      - helm_vars/morty/values.yaml

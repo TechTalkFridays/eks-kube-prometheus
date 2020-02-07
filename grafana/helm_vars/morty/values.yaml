@@ -1,0 +1,54 @@
+image: grafana/grafana:6.4.3
+replicas: 1
+externalUrl: prom.morty.com
+secretName: /morty/monitoring/grafana-config
+ingress:
+  nginx:
+    enabled: true
+    http_x_forwarded_proto: true
+  istio:
+    enabled: false
+resources:
+  limits:
+    cpu: "200m"
+    memory: "200Mi"
+  requests:
+    cpu: "100m"
+    memory: "100Mi"
+
+dashboards:
+  - apiserver
+  - cluster-total
+  - k8s-resources-cluster
+  - k8s-resources-namespace
+  - k8s-resources-node
+  - k8s-resources-pod
+  - k8s-resources-workload
+  - k8s-resources-workloads-namespace
+  - kubelet
+  - namespace-by-pod
+  - namespace-by-workload
+  - node-cluster-rsrc-use
+  - node-rsrc-use
+  - nodes
+  - persistentvolumesusage
+  - pod-total
+  - pods
+  - prometheus
+  - statefulset
+  - workload-total
+
+datasource: |
+  {
+    "apiVersion": 1,
+    "datasources":
+      [ {
+          "access": "proxy",
+          "editable": false,
+          "name": "prometheus",
+          "orgId": 1,
+          "type": "prometheus",
+          "url": "http://prometheus-k8s.monitoring.svc:80",
+          "version": 1
+      } ]
+  }

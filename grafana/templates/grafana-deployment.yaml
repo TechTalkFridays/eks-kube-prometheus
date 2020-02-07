@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - image: {{ .Values.image }}
+        name: grafana
+        args:
+          - --config=/etc/grafana/grafana.ini
+        ports:
+        - containerPort: 3000
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+{{- if hasKey .Values "resources" }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+{{- end }}
+        volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: grafana-storage
+          readOnly: false
+        - mountPath: /etc/grafana/provisioning/datasources
+          name: grafana-datasources
+          readOnly: false
+        - mountPath: /etc/grafana/provisioning/dashboards
+          name: grafana-dashboards
+          readOnly: false
+{{- if .Values.dashboards }}
+{{- range .Values.dashboards }}
+        - mountPath: /grafana-dashboard-definitions/0/{{ . }}
+          name: grafana-dashboard-{{ . }}
+          readOnly: false
+{{- end }}
+{{- end }}
+        - mountPath: /etc/grafana
+          name: grafana-config
+          readOnly: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      serviceAccountName: grafana
+      volumes:
+      - emptyDir: {}
+        name: grafana-storage
+      - name: grafana-datasources
+        secret:
+          secretName: grafana-datasources
+      - secret:
+          secretName: grafana-config
+        name: grafana-config
+      - configMap:
+          name: grafana-dashboards
+        name: grafana-dashboards
+{{- if .Values.dashboards }}
+{{- range .Values.dashboards }}
+      - configMap:
+          name: grafana-dashboard-{{ . }}
+        name: grafana-dashboard-{{ . }}
+{{- end }}
+{{- end }}

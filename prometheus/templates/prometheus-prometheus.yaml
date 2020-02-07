@@ -1,0 +1,54 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    prometheus: k8s
+  name: k8s
+  namespace: {{ .Release.Namespace }}
+spec:
+  additionalScrapeConfigs:
+      key: prometheus-additional.yaml
+      name: additional-scrape-config
+  alerting:
+    alertmanagers:
+    - name: alertmanager-main
+      namespace: {{ .Release.Namespace }}
+      port: web
+  baseImage: {{ .Values.prometheus.baseImage }}
+  nodeSelector:
+    kubernetes.io/os: linux
+  podMonitorSelector: {}
+  replicas: {{ .Values.prometheus.replicas }}
+  externalUrl: "https://{{ .Values.prometheus.externalUrl }}"
+{{- if hasKey .Values.prometheus "resources" }}
+  resources:
+{{ toYaml .Values.prometheus.resources | indent 12 }}
+{{- end }}
+  ruleSelector:
+    matchLabels:
+      prometheus: k8s
+      role: alert-rules
+{{- if hasKey .Values.prometheus "secrets" }}
+  secrets: {{ .Values.prometheus.secrets }}
+{{- end}}
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: prometheus-k8s
+  priorityClassName: shared-services
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
+{{- if hasKey .Values.prometheus.data "rotation" }}
+  retention: {{ .Values.prometheus.data.rotation }}
+{{- end }}
+{{- if hasKey .Values.prometheus.data "storage" }}
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: {{ .Values.prometheus.data.class }}
+        resources:
+          requests:
+            storage: {{ .Values.prometheus.data.storage }}
+{{- end }}
+  version: {{ .Values.prometheus.version }}

@@ -1,0 +1,14 @@
+apiVersion: v1
+name: node-exporter
+version: 0.0.1
+appVersion: 0.18.1
+description: Helm chart for node-exporter
+keywords:
+  - kube-prometheus
+  - node-exporter
+sources:
+  - git@github.com:TechTalkFridays/eks-kube-prometheus.git
+engine: gotpl
+maintainers:
+- name: Joel Damata
+  email: joel.damata94@gmail.com

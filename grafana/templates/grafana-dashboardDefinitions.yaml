@@ -1,0 +1,15 @@
+---
+{{- if .Values.dashboards }}
+{{ $files := .Files }}
+{{- range .Values.dashboards }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-{{ . }}
+  namespace: {{ $.Release.Namespace }}
+data:
+  {{ . }}.json: |-
+{{ $files.Get (printf "dashboards/%s.json" .) | indent 4 }}
+---
+{{- end }}
+{{- end }}

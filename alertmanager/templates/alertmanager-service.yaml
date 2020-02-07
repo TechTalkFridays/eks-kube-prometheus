@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    alertmanager: main
+  name: alertmanager-main
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 9093
+  selector:
+    alertmanager: main
+    app: alertmanager
+  sessionAffinity: ClientIP
+{{- if .Values.ingress.nginx.enabled }}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-alertmanager
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/ingress.class: "nginx"
+{{- if .Values.ingress.nginx.http_x_forwarded_proto }}
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($http_x_forwarded_proto != 'https') {
+        return 301 https://$host$request_uri;
+      }
+{{- end }}
+spec:
+  rules:
+  - host: {{ .Values.externalUrl }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: alertmanager-main
+          servicePort: 80
+{{- else if .Values.ingress.istio.enabled }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: alertmanager
+  namespace: {{ .Release.Namespace }}
+spec:
+  gateways:
+  - core-internal-gateway.istio-system.svc.cluster.local
+  hosts:
+  - {{ .Values.externalUrl }}
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: alertmanager-main
+        port:
+          number: 80
+{{- end }}

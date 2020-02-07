@@ -1,0 +1,12 @@
+---
+apiVersion: "kubernetes-client.io/v1"
+kind: ExternalSecret
+metadata:
+  name: additional-scrape-config
+  namespace: {{ .Release.Namespace }}
+secretDescriptor:
+  backendType: secretsManager
+  data:
+    - key: {{ .Values.prometheus.secretName }}
+      name: prometheus-additional.yaml
+      property: prometheus-additional.yaml

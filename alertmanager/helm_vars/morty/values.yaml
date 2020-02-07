@@ -1,0 +1,18 @@
+baseImage: quay.io/prometheus/alertmanager
+version: v0.18.0
+replicas: 1
+externalUrl: alm.morty.com
+secretName: /morty/monitoring/alertmanager-main
+ingress:
+  nginx:
+    enabled: true
+    http_x_forwarded_proto: true
+  istio:
+    enabled: false
+resources:
+  limits:
+    cpu: 0.2
+    memory: 60Mi
+  requests:
+    cpu: 0.1
+    memory: 40Mi
