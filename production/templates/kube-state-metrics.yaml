@@ -13,7 +13,7 @@ spec:
   source:
     path: helm_charts/kube-state-metrics
     repoURL: git@github.com:TechTalkFridays/eks-kube-prometheus.git
-    targetRevision: master
+    targetRevision: production
     helm:
       valueFiles:
       - helm_vars/production/values.yaml

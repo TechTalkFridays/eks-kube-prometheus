@@ -1,6 +1,6 @@
 # morty monitoring stack
 
-Contains argo applications that deploy the monitoring stack for the morty cluster.
+Contains argo applications that deploy the monitoring stack for the engineering cluster.
 
 - alertmanager
 - grafana

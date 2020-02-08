@@ -13,7 +13,7 @@ spec:
   source:
     path: helm_charts/grafana
     repoURL: git@github.com:TechTalkFridays/eks-kube-prometheus.git
-    targetRevision: development
+    targetRevision: master
     helm:
       valueFiles:
       - helm_vars/engineering/values.yaml
