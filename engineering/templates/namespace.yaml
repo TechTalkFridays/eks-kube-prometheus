@@ -14,7 +14,7 @@ spec:
     path: helm_charts/namespace
     repoURL: https://github.com/TechTalkFridays/eks-kube-prometheus.git
     targetRevision: master
- syncPolicy:
+  syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
       selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
