@@ -17,7 +17,6 @@ spec:
     runAsNonRoot: true
     runAsUser: 1000
   serviceAccountName: alertmanager-main
-  priorityClassName: shared-services
   version: "{{ .Values.version }}"
 {{- if hasKey .Values "resources" }}
   resources:

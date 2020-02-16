@@ -43,4 +43,3 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
       serviceAccountName: prometheus-operator
-      priorityClassName: shared-services

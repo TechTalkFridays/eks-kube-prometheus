@@ -42,7 +42,6 @@ spec:
       nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: prometheus-adapter
-      priorityClassName: shared-services
       volumes:
       - emptyDir: {}
         name: tmpfs

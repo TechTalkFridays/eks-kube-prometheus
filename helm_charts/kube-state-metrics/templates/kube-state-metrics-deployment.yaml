@@ -71,4 +71,3 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
       serviceAccountName: kube-state-metrics
-      priorityClassName: shared-services
