@@ -13,7 +13,7 @@ spec:
   project: kube-prometheus
   source:
     path: helm_charts/alertmanager
-    repoURL: git@github.com:TechTalkFridays/eks-kube-prometheus.git
+    repoURL: https://github.com/TechTalkFridays/eks-kube-prometheus.git
     targetRevision: production
     helm:
       valueFiles:
