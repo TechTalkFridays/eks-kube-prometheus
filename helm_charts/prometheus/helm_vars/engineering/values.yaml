@@ -12,7 +12,7 @@ prometheus:
     istio:
       enabled: false
   data:
-    class: 'standard'
+    class: 'gp2'
     storage: 300Gi
     rotation: '60d'
   resources:
