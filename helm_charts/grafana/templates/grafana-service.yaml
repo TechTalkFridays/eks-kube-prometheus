@@ -20,7 +20,7 @@ metadata:
   name: ingress-grafana
   namespace: {{ .Release.Namespace }}
   annotations:
-    nginx.ingress.kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - host: {{ .Values.externalUrl }}
