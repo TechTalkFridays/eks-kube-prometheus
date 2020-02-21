@@ -1,6 +1,6 @@
 image: grafana/grafana:6.4.3
 replicas: 1
-externalUrl: prom.engineering.com
+externalUrl: graf.techtalk.com
 secretName: /engineering/monitoring/grafana-config
 ingress:
   nginx:

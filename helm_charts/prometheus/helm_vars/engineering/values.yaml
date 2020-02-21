@@ -2,7 +2,7 @@ prometheus:
   baseImage: 'quay.io/prometheus/prometheus'
   version: 'v2.11.0'
   replicas: 2
-  externalUrl: 'prom.engineering.com'
+  externalUrl: 'prom.techtalk.com'
   secretName: /engineering/monitoring/prometheus-additional-scrape
   kubeletPort: https
   ingress:

@@ -1,7 +1,7 @@
 baseImage: quay.io/prometheus/alertmanager
 version: v0.18.0
 replicas: 1
-externalUrl: alm.engineering.com
+externalUrl: alm.techtalk.com
 secretName: /engineering/monitoring/alertmanager-main
 ingress:
   nginx:
