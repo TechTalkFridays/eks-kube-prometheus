@@ -9,12 +9,6 @@ prometheus:
     nginx:
       enabled: true
       http_x_forwarded_proto: true
-    istio:
-      enabled: false
-  data:
-    class: 'standard'
-    storage: 300Gi
-    rotation: '60d'
   resources:
     limits:
       cpu: 1.0

@@ -22,9 +22,3 @@ spec:
   resources:
 {{ toYaml .Values.resources | indent 12 }}
 {{- end }}
-  storage:
-    volumeClaimTemplate:
-      spec:
-        resources:
-          requests:
-            storage: 10Gi

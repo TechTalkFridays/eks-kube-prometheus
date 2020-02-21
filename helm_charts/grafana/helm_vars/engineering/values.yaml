@@ -6,8 +6,6 @@ ingress:
   nginx:
     enabled: true
     http_x_forwarded_proto: true
-  istio:
-    enabled: false
 resources:
   limits:
     cpu: "200m"

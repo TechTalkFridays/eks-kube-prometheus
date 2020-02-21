@@ -38,16 +38,4 @@ spec:
   serviceAccountName: prometheus-k8s
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector: {}
-{{- if hasKey .Values.prometheus.data "rotation" }}
-  retention: {{ .Values.prometheus.data.rotation }}
-{{- end }}
-{{- if hasKey .Values.prometheus.data "storage" }}
-  storage:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: {{ .Values.prometheus.data.class }}
-        resources:
-          requests:
-            storage: {{ .Values.prometheus.data.storage }}
-{{- end }}
   version: {{ .Values.prometheus.version }}
